@@ -9,7 +9,7 @@ function createToken(user: IUser) {
   });
 }
 
-export const singUp = async (
+export const signUp = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
@@ -29,7 +29,7 @@ export const singUp = async (
   return res.status(201).json(newUser);
 };
 
-export const singIn = async (req: Request, res: Response) => {
+export const signIn = async (req: Request, res: Response) => {
   if (!req.body.email || !req.body.password)
     return res.status(400).json({ msg: "Please.Send your email and password" });
 
