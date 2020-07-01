@@ -5,7 +5,7 @@ import {
   productsList,
   productsListPerZone,
 } from "../controllers/product.controller";
-import { users } from "../controllers/user.controller";
+import { users, verifyIdToken } from "../controllers/user.controller";
 import { addZone, zones } from "../controllers/zone.controller";
 
 const router = Router();
@@ -17,7 +17,10 @@ router.get(
     res.send("success");
   }
 );
-router.get("/users", passport.authenticate("jwt", { session: false }), users);
+router.get(
+  "/users", 
+  passport.authenticate("jwt", { session: false }), 
+  users);
 router.post(
   "/addProduct",
   passport.authenticate("jwt", { session: false }),
@@ -38,6 +41,10 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   addZone
 );
-router.get("/Zones", passport.authenticate("jwt", { session: false }), zones);
+router.get(
+  "/Zones", 
+  verifyIdToken, 
+  zones
+);
 
 export default router;

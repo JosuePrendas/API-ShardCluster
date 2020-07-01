@@ -28,6 +28,7 @@ export const addZone = async (
 };
 
 export const zones = async (req: Request, res: Response): Promise<Response> => {
+  console.log(req.headers.authorization);
   const zonelist = await Zone.find();
   return res.status(400).json({ msg: zonelist });
 };
