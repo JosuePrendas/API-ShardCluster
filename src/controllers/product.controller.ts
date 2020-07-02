@@ -1,11 +1,15 @@
 import { Request, Response } from "express";
 import Product from "../models/product";
 import Zone from "../models/zone";
+import { verifyIdToken } from "../controllers/user.controller";
 
 export const addProduct = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  let tokenValid = await verifyIdToken(req, res);
+  if (!tokenValid) return res.status(400).json({ msg: "Unauthorized" });
+
   if (!req.body.producto || !req.body.productor || !req.body.zona)
     return res.status(400).json({ msg: "Please. Send all the information" });
 
@@ -29,6 +33,9 @@ export const productsListPerZone = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  let tokenValid = await verifyIdToken(req, res);
+  if (!tokenValid) return res.status(400).json({ msg: "Unauthorized" });
+
   if (!req.body.lat || !req.body.long)
     return res.status(400).json({ msg: "Please. Send lat and Long data" });
 
@@ -52,6 +59,9 @@ export const productsList = async (
   req: Request,
   res: Response
 ): Promise<Response> => {
+  let tokenValid = await verifyIdToken(req, res);
+  if (!tokenValid) return res.status(400).json({ msg: "Unauthorized" });
+
   const productsList = await Product.find({});
   return res.status(400).json({ products: productsList });
 };
